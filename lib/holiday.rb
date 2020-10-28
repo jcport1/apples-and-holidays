@@ -18,6 +18,8 @@ def second_supply_for_fourth_of_july(holiday_hash)
   #   }
   # }
   # return the second element in the 4th of July array
+  holiday_hash[:summer][:fourth_of_july][1]
+
 end
 
 def add_supply_to_winter_holidays(holiday_hash, supply)
@@ -25,6 +27,13 @@ def add_supply_to_winter_holidays(holiday_hash, supply)
   # add the second argument, which is a supply, to BOTH the
   # Christmas AND the New Year's arrays
 
+  holiday_hash.each do |season, holiday_details| 
+    if season == :winter
+      holiday_details.each do |attribute, data|
+        data << "#{supply}"
+      end
+    end 
+  end 
 end
 
 
@@ -32,33 +41,82 @@ def add_supply_to_memorial_day(holiday_hash, supply)
   # again, holiday_hash is the same as the ones above
   # add the second argument to the memorial day array
 
+  holiday_hash.each do |season, holiday_details|
+    if season == :spring
+      holiday_details.each do |attribute, data|
+        data << "#{supply}"
+      end
+      holiday_details.each do |attribute, data|
+        data << "#{supply}"
+      end 
+    end 
+  end   
 end
+
 
 def add_new_holiday_with_supplies(holiday_hash, season, holiday_name, supply_array)
   # code here
   # remember to return the updated hash
+  
+    #  holiday_hash.each do |season, holiday_details|
+    #     holiday_details << "#{holiday_name}"
+    #   end 
 
+    #   holiday_details.each do |attribute, data|
+    #     data << "#{supply}"
+    #   end 
+
+    holiday_hash[season][holiday_name] = supply_array
+    
 end
 
 def all_winter_holiday_supplies(holiday_hash)
   # return an array of all of the supplies that are used in the winter season
 
+  holiday_hash[:winter].values.flatten
+
 end
 
 def all_supplies_in_holidays(holiday_hash)
-  # iterate through holiday_hash and print items such that your readout resembles:
-  # Winter:
-  #   Christmas: Lights, Wreath
+
+     # iterate through holiday_hash and print items such that your readout resembles:
+  # Winter: this is a lc symbol #:winter *done* 
+  #To convert a symbol to a string, use .to_s method, we also need it capitalized use .capitalize! method w/bang operator on string 
+  #   Christmas: (.to_s, them uppercase) Lights, Wreath *these are an array that need to be changed to a string
   #   New Years: Party Hats
   # Summer:
   #   Fourth Of July: Fireworks, BBQ
   # etc.
 
-end
+
+  holiday_hash.each do |season, holiday_detail_hash|
+
+    puts"#{season.to_s.capitalize}:"
+
+    holiday_detail_hash.each do |holiday, item|
+
+    formatted_holiday = holiday.to_s.split("_").map(&:capitalize).join(" ")
+
+      puts "  #{formatted_holiday}: #{item.join(", ")}"
+   
+    end 
+ 
+  end 
+
+end 
 
 def all_holidays_with_bbq(holiday_hash)
   # return an array of holiday names (as symbols) where supply lists
   # include the string "BBQ"
+
+final_array = []
+
+holiday_hash.each do |season, holiday_details_hash|
+  
+  holiday_details_hash.each { |holiday, data| final_array << holiday if data.include?("BBQ")} 
+end 
+
+final_array 
 
 end
 
